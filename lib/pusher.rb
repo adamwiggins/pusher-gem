@@ -24,7 +24,6 @@ class Pusher
     end
 
     def trigger(event_name, data)
-      puts Time.now
       Thread.new do
         begin
           @http.post( 
