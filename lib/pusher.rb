@@ -24,17 +24,20 @@ class Pusher
     end
 
     def trigger(event_name, data)
-      begin
-        @http.post( 
-          @uri.path, 
-          self.class.turn_into_json({
-            :event => event_name,
-            :data => data
-            }),
-          {'Content-Type'=> 'application/json'}
-        )
-      rescue StandardError => e
-        handle_error e
+      puts Time.now
+      Thread.new do
+        begin
+          @http.post( 
+            @uri.path, 
+            self.class.turn_into_json({
+              :event => event_name,
+              :data => data
+              }),
+            {'Content-Type'=> 'application/json'}
+          )
+        rescue StandardError => e
+          handle_error e
+        end
       end
     end
     
