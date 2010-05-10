@@ -169,6 +169,15 @@ describe Pusher do
       end
     end
 
+    describe 'Channel#curl' do
+      it "should print out curl command" do
+        data = {"data" => "hello world"}
+        response = Pusher['test_channel'].curl('my_event', {'data' => 'hello world'})
+        response.should match /curl -v -H \"Content-Type: application\/json\" -X POST -d/ 
+      end
+    end
+    
+
     describe "Channgel#trigger_async" do
       #in order to match URLs when testing http requests
       #override the method that converts query hash to string

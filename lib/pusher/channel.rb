@@ -58,6 +58,12 @@ module Pusher
 
       handle_response(response.code.to_i, response.body.chomp)
     end
+    
+    def curl(event_name, data, socket_id = nil)
+      curl_cmd = "curl -v -H \"Content-Type: application/json\" -X POST -d"
+      query, body = construct_request(event_name, data, socket_id)
+      "#{curl_cmd} #{body.inspect} \"http://#{@uri.host}:#{@uri.port}#{@uri.path}?#{query.to_params}\"\n"
+    end
 
     def trigger(event_name, data, socket_id = nil)
       trigger!(event_name, data, socket_id)
